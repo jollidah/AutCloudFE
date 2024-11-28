@@ -2,9 +2,10 @@ import 'package:autcloud/screens/last_screen.dart';
 import 'package:autcloud/widgets/dropdown_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:autcloud/services/send_request.dart';
+import 'package:autcloud/models/autcloud_data.dart';
 
 // Ask Scalable Screen
-
 class NinthScreen extends StatelessWidget {
   NinthScreen({super.key});
 
@@ -25,10 +26,9 @@ class NinthScreen extends StatelessWidget {
       additionalText: "Last Question 🚀",
       dropdownItems: dataTypeList,
       selectedValue: controller.selectedDataType,
-      onSubmit: () async{
+      onSubmit: () async {
         final responseIaC = await sendRequest();
-        writeToFile(responseIaC);
-        Get.to(LastScreen(responseIaC));
+        Get.to(LastScreen(responseIaC: responseIaC)); // Ensure LastScreen accepts ResponseIaC
       },
       currentPage: 8
     );

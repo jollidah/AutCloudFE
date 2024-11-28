@@ -10,7 +10,7 @@ import 'package:autcloud/screens/seventh_screen.dart';
 import 'package:autcloud/screens/third_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io'; // 파일 저장을 위해 사용
+import 'package:autcloud/models/autcloud_data.dart';
 
 Future<ResponseIaC> sendRequest() async {
 
@@ -65,8 +65,9 @@ Future<ResponseIaC> sendRequest() async {
     } else {
       print('요청 실패: ${response.statusCode}');
     }
+    return ResponseIaC.fromJson(json.decode(response.body)); // Ensure response is defined
   } catch (e) {
     print('오류 발생: $e');
+    rethrow; // Optionally rethrow the error
   }
-  return ResponseIaC.fromJson(json.decode(response.body));
 }
