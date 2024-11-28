@@ -1,18 +1,19 @@
-import 'package:autcloud/screens/second_screen.dart';
-import 'package:autcloud/style.dart';
+import 'package:autcloud/screens/home_screen.dart';
+import 'package:autcloud/screens/third_screen.dart';
+import 'package:autcloud/widgets/progress_bar.dart';
 import 'package:autcloud/widgets/submit_button.dart';
 import 'package:autcloud/widgets/upper_content.dart';
 import 'package:autcloud/widgets/input_box_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+// Ask Service Name Screen
 
-  final uptterTitle = "AutCloud";
-  final upperSubtitle = "Build infrastructure easily!";
+class SecondScreen extends StatelessWidget {
+  SecondScreen({super.key});
 
   final NameInputController nameInputController = Get.put(NameInputController());
+  final ServiceNameInputController serviceNameInputController = Get.put(ServiceNameInputController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,11 @@ class HomeScreen extends StatelessWidget {
         children: [
           Flexible(
             flex: 1,
-            child: UpperContent("", title: uptterTitle, subtitle: upperSubtitle,),
+            child: UpperContent(
+              "", 
+              title: "Hello, ${nameInputController.nameInput}", 
+              subtitle: "What is your service name?",
+            ),
           ),
           Expanded(
             child: Container(
@@ -29,22 +34,7 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 50),
-                    child: const Column(
-                      children: [
-                        Text(
-                          "Nice to meet you!",
-                          style: TextStyle(fontSize: 18, color: TextColors.subtitle),
-                        ),
-                        Text(
-                          "What's your name?",
-                          style: TextStyle(fontSize: 18, color: TextColors.subtitle),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // 텍스트 필드, 버튼
+                  const SizedBox(height: 100,),
                   Container(
                     margin: const EdgeInsets.all(30),
                     child: Row(
@@ -56,22 +46,23 @@ class HomeScreen extends StatelessWidget {
                           height: 50,
                           child: TextField(
                             onChanged: (value) {
-                              nameInputController.updateInput(value);
+                              serviceNameInputController.updateInput(value);
                             },
                             decoration: InputBoxDecoration(),
                             onSubmitted: (value) {
-                              Get.to(SecondScreen());
+                              Get.to(ThirdScreen());
                             },
                           ),
                         ),
-                        SubmitButton(onTap: (){Get.to(SecondScreen());},),
+                        SubmitButton(onTap: () {
+                          Get.to(ThirdScreen());
+                        },),
                       ],
                     ),
                   ),
+                  // ProgressBarExample(),
                   Expanded(
-                    child: Container(
-                      color: Colors.white,
-                    )
+                    child: ProgressBarExample(currentPage: 1,),
                   )
               ])),
           ),
@@ -81,12 +72,15 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
-// 이름 입력
-class NameInputController extends GetxController {
-  var nameInput = ''.obs;
+// 서비스 이름 입력
+class ServiceNameInputController extends GetxController {
+  var serviceNameInput = ''.obs;
 
   void updateInput(String value) {
-    nameInput.value = value;
+    serviceNameInput.value = value;
+  }
+
+  getServiceName() {
+    return serviceNameInput.value;
   }
 }

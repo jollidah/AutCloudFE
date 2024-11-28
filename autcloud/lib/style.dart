@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const titleTextStyle = TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
+const subtitleTextStyle = TextStyle(fontSize: 25, color: TextColors.subtitle);
+
 class MainColors {
   static const Color yellow = Color(0xffe3b140);
 }

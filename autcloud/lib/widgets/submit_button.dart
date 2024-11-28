@@ -1,19 +1,21 @@
 import 'package:autcloud/style.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SubmitButton extends StatelessWidget {
-  const SubmitButton({super.key});
+  final VoidCallback onTap;
+
+  const SubmitButton({
+    super.key,
+    required this.onTap
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.to(SecondPage());
-      },
+      onTap: onTap,
       child: Container(
-        height: 40,
-        width: 80,
+        height: 50,
+        width: 90,
         decoration: BoxDecoration(
           color: TextColors.title, 
           borderRadius: BorderRadius.circular(15), 
@@ -25,18 +27,6 @@ class SubmitButton extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: Center(child: Text("두번째 ㅎ"),),
     );
   }
 }
