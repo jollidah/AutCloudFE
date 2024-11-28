@@ -13,7 +13,10 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LastScreen extends StatefulWidget {
-  LastScreen({super.key});
+  final String responseIaC; // Add this line
+
+  LastScreen({Key? key, required this.responseIaC}) : super(key: key); // Update constructor
+
 
   @override
   State<LastScreen> createState() => _LastScreenState();

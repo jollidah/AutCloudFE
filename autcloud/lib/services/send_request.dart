@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io'; // 파일 저장을 위해 사용
 
-Future<void> sendRequest() async {
+Future<ResponseIaC> sendRequest() async {
 
   final url = Uri.parse('http://localhost:3000/api/v1/external/iac'); 
 
@@ -61,23 +61,12 @@ Future<void> sendRequest() async {
     );
 
     if (response.statusCode == 200) {
-      // 파일 다운로드를 위해 바이너리 데이터 스트림 처리
-      final fileUrl = json.decode(response.body)['file_url']; // 서버가 파일 URL을 반환한다고 가정
-      final fileResponse = await http.get(Uri.parse(fileUrl));
-
-      if (fileResponse.statusCode == 200) {
-        // 로컬 디스크에 파일 저장
-        final file = File('/path/to/downloaded/file_name'); // 저장 경로 설정
-        await file.writeAsBytes(fileResponse.bodyBytes);
-
-        print('파일 다운로드 성공: ${file.path}');
-      } else {
-        print('파일 다운로드 실패: ${fileResponse.statusCode}');
-      }
+      print('요청 성공: ${response.body}');
     } else {
       print('요청 실패: ${response.statusCode}');
     }
   } catch (e) {
     print('오류 발생: $e');
   }
+  return ResponseIaC.fromJson(json.decode(response.body));
 }

@@ -26,9 +26,9 @@ class NinthScreen extends StatelessWidget {
       dropdownItems: dataTypeList,
       selectedValue: controller.selectedDataType,
       onSubmit: () async{
-        // await sendRequest();
-        // writeToFile();
-        Get.to(LastScreen());
+        final responseIaC = await sendRequest();
+        writeToFile(responseIaC);
+        Get.to(LastScreen(responseIaC));
       },
       currentPage: 8
     );
