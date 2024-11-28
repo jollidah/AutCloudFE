@@ -15,7 +15,7 @@ class FourthScreen extends StatelessWidget {
     "Game",
     "Mobile app",
     "Desktop/Laptop app",
-    "Website",
+    "Website", 
     "Marketplace",
     "API Server",
     "SDK"
@@ -40,6 +40,23 @@ class PackagingTypeDropdownController extends GetxController {
   var selectedPackageType = ''.obs;
 
   getPackagingType() {
+    print(selectedPackageType.value);
+    switch (selectedPackageType.value) {
+      case "Game":
+        return "Game";
+      case "Mobile":
+        return "MobileApp";
+      case "Desktop/Laptop":
+        return "DesktopLaptopApp";
+      case "Website":
+        return "Website";
+      case "Marketplace":
+        return "Marketplace";
+      case "API Server":
+        return "APIServer";
+      case "SDK":
+        return "SDK";
+    }
     return selectedPackageType.value;
   }
 }
