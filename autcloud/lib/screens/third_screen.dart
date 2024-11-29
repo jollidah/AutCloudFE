@@ -54,5 +54,45 @@ class ServiceTypeDropdownController extends GetxController {
 
   getServiceType() {
     return selectedServiceType.value;
+    switch (value) {
+      case "Game":
+        return "Game";
+      case "Online education":
+        return "OnlineEducation";
+      case "Online social media":
+        return "OnlineSocialMedia";
+      case "Video streaming":
+        return "VideoStreaming";
+      case "Ecommerce":
+        return "Ecommerce";
+      case "Music streaming":
+        return "MusicStreaming";
+      case "Weather forecasting API(for Engineer)":
+        return "WeatherForecastingAPIForEngineer";
+      case "AI model hosting":
+        return "AiModelCodeHosting";
+      case "IoT device managing":
+        return "IotDeviceManaging";
+      case "Blogging platform":
+        return "BloggingPlatform";
+      case "Online appointment service":
+        return "OnlineAppointmentService";
+      case "Fitness tracking app":
+        return "FitnessTrackingApp";
+      case "Online survey platform":
+        return "OnlineSurveyPlatform";
+      case "Online collaboration/productivity service":
+        return "OnlineCollaborationProductivityService";
+      case "Online PayFac":
+        return "OnlinePayFac";
+      case "Online photo sharing service":
+        return "OnlinePhotoSharingService";
+      case "Ride hailing service":
+        return "RideHailingService";
+      case "Customer support chatbot":
+        return "CustomerSupportChatbot";
+      case "Video editing tools":
+        return "VideoEditingTools";
+    }
   }
 }

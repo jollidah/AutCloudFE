@@ -11,11 +11,11 @@ class FifthScreen extends StatelessWidget {
   final ComputingServiceModelDropdownController controller =
       Get.put(ComputingServiceModelDropdownController());
   final computingServiceModelList = [
-    "Iaas",
-    "Paas",
-    "Saas",
-    "Faas",
-    "Api",
+    "IaaS",
+    "PaaS",
+    "SaaS",
+    "FaaS",
+    "API",
     "CodeLibrary",
   ];
 

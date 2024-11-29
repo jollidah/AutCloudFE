@@ -36,6 +36,14 @@ class TargetStabilityTypeDropdownController extends GetxController {
   var selectedTargetStabilityType = ''.obs;
 
   getTargetStabilityType() {
+    switch (selectedTargetStabilityType.value) {
+      case "Basic (~99% uptime)":
+        return "Basic";
+      case "Reliable (~99.9% uptime)":
+        return "Reliable";
+      case "Mission~Critical (~99.99% uptime)":
+        return "MissionCritical";
+    }
     return selectedTargetStabilityType.value;
   }
 }

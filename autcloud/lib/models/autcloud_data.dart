@@ -35,3 +35,49 @@ class RequestIac {
     };
   }
 }
+
+class ResponseIaC{
+  final String serviceName;
+  final String iacCode;
+  final ComputingResourceSpec computingResourceSpec;
+
+  ResponseIaC({
+    required this.serviceName,
+    required this.iacCode,
+    required this.computingResourceSpec,
+  });
+
+  factory ResponseIaC.fromJson(Map<String, dynamic> json){
+    return ResponseIaC(
+      serviceName: json['service_name'],
+      iacCode: json['iac_code'],
+      computingResourceSpec: ComputingResourceSpec.fromJson(json['computing_resource_spec']),
+    );
+  }
+}
+
+class ComputingResourceSpec{
+  final String vCpuCores;
+  final String memory;
+  final String disk;
+  final String bandwidth;
+  final String numOfInstance;
+
+  ComputingResourceSpec({
+    required this.vCpuCores,
+    required this.memory,
+    required this.disk,
+    required this.bandwidth,
+    required this.numOfInstance,
+  });
+
+  factory ComputingResourceSpec.fromJson(Map<String, dynamic> json){
+    return ComputingResourceSpec(
+      vCpuCores: json['vcpu_cores'],
+      memory: json['memory'],
+      disk: json['disk'],
+      bandwidth: json['bandwidth'],
+      numOfInstance: json['num_of_instance'],
+    );
+  }
+}

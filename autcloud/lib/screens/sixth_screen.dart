@@ -40,6 +40,24 @@ class ProfitModelTypeDropdownController extends GetxController {
   var selectedProfitModelType = ''.obs;
 
   getProfitModelType() {
+    switch (selectedProfitModelType.value) {
+      case "Subscription fee":
+        return "SubscriptionFee";
+      case "Referral fee/commission":
+        return "ReferralFeeCommission";
+      case "Access rights sales":
+        return "AccessRightsSales";
+      case "Advertising":
+        return "Advertising";
+      case "Product/Item/Service sales":
+        return "ProductItemServiceSales";
+      case "API consumption":
+        return "APIConsumption";
+      case "Licensing + Maintenance":
+        return "LicensingAndMaintenance";
+      case "On Demand":
+        return "OnDemand";
+    }
     return selectedProfitModelType.value;
   }
 }

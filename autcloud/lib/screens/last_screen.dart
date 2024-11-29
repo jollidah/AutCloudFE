@@ -11,10 +11,14 @@ import 'package:autcloud/widgets/upper_content.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:autcloud/models/autcloud_data.dart';
+import 'package:autcloud/services/iac.dart';
 
 class LastScreen extends StatefulWidget {
-  LastScreen({super.key});
+  final ResponseIaC responseIaC;
 
+  LastScreen({Key? key, required this.responseIaC}) : super(key: key); // Update constructor
+ 
   @override
   State<LastScreen> createState() => _LastScreenState();
 }
@@ -26,6 +30,12 @@ class _LastScreenState extends State<LastScreen> {
   void initState() {
     super.initState();
     // 2초 후에 로딩 애니메이션을 숨기고 콘텐츠를 표시
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        // TODO represent computing resource spec
+        print(widget.responseIaC);
+      });
+    });
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
         _isLoading = false;
@@ -89,7 +99,7 @@ class _LastScreenState extends State<LastScreen> {
                       // 다운로드 버튼
                       Container(
                         margin: const EdgeInsets.all(30),
-                        child: DownloadButton(_isLoading),
+                        child: DownloadButton(_isLoading, widget.responseIaC),
                       ),
                     ],
                   ),
@@ -131,10 +141,10 @@ class _LastScreenState extends State<LastScreen> {
 
 
 // 다운로드 버튼
-Widget DownloadButton(_isLoading) {
+Widget DownloadButton(_isLoading, ResponseIaC responseIaC) {
   return GestureDetector(
     onTap: () {
-      _isLoading ? null : print("다운로드");
+      _isLoading ? null : writeToFile(responseIaC);
     },
     child: Container(
       height: 70,

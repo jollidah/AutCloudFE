@@ -39,6 +39,20 @@ class ScalableTypeDropdownController extends GetxController {
   var selectedScalableType = ''.obs;
 
   getScalableType() {
+    switch (selectedScalableType.value) {
+      case "Under 10":
+        return "Under10";
+      case "11 - 50":
+        return "Between11And50";
+      case "51 - 100":
+        return "Between51And100";
+      case "101 - 200":
+        return "Between101And200";
+      case "201 - 500":
+        return "Between201And500";
+      case "Over 500":
+        return "Over500";
+    }
     return selectedScalableType.value;
   }
 }
