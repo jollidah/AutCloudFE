@@ -1,7 +1,7 @@
 import 'package:autcloud/screens/home_screen.dart';
 import 'package:autcloud/screens/third_screen.dart';
 import 'package:autcloud/widgets/progress_bar.dart';
-import 'package:autcloud/widgets/submit_button.dart';
+import 'package:autcloud/widgets/textinput_submit_button.dart';
 import 'package:autcloud/widgets/upper_content.dart';
 import 'package:autcloud/widgets/input_box_decoration.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +54,7 @@ class SecondScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                        SubmitButton(onTap: () {
+                        TextinputSubmitButton(onTap: () {
                           Get.to(ThirdScreen());
                         },),
                       ],

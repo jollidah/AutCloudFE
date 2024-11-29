@@ -1,6 +1,6 @@
 import 'package:autcloud/widgets/input_box_decoration.dart';
 import 'package:autcloud/widgets/progress_bar.dart';
-import 'package:autcloud/widgets/submit_button.dart';
+import 'package:autcloud/widgets/dropdown_submit_button.dart';
 import 'package:autcloud/widgets/upper_content.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +16,8 @@ class CustomDropdown extends StatelessWidget {
     required this.hintText,
   });
 
+  IsDropdownSelectedController isDropdownSelectedController = Get.put(IsDropdownSelectedController());
+
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
@@ -25,6 +27,7 @@ class CustomDropdown extends StatelessWidget {
       value: selectedValue.value.isEmpty ? null : selectedValue.value,
       onChanged: (newValue) {
         selectedValue.value = newValue!;
+        isDropdownSelectedController.change(true);
       },
       items: items
           .map((item) => DropdownMenuItem<String>(
@@ -55,6 +58,8 @@ class DropdownScreenTemplate extends StatelessWidget {
     required this.onSubmit,
     required this.currentPage,
   });
+
+  IsDropdownSelectedController isDropdownSelectedController = Get.put(IsDropdownSelectedController());
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +98,13 @@ class DropdownScreenTemplate extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 30,),
-                        SubmitButton(
-                          onTap: () => onSubmit(),
+                        DropdownSubmitButton(
+                          onTap: () {
+                            if (isDropdownSelectedController.isSelected.value) {
+                              onSubmit(); 
+                              isDropdownSelectedController.change(false); // 선택 상태 초기화
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -109,5 +119,14 @@ class DropdownScreenTemplate extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// 드롭다운 버튼 선택 여부 
+class IsDropdownSelectedController extends GetxController {
+  RxBool isSelected = false.obs;
+
+  void change(bool newValue) {
+    isSelected.value = newValue; // .value로 접근하여 값을 업데이트합니다.
   }
 }

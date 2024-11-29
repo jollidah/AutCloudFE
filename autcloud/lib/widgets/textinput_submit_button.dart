@@ -1,12 +1,12 @@
 import 'package:autcloud/style.dart';
 import 'package:flutter/material.dart';
 
-class SubmitButton extends StatelessWidget {
+class TextinputSubmitButton extends StatelessWidget {
   final VoidCallback onTap;
-
-  const SubmitButton({
+  
+  TextinputSubmitButton({
     super.key,
-    required this.onTap
+    required this.onTap,
   });
 
   @override
