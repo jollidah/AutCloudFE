@@ -45,7 +45,7 @@ class PackagingTypeDropdownController extends GetxController {
         return "Game";
       case "Mobile app":
         return "MobileApp";
-      case "Desktop/Laptop":
+      case "Desktop/Laptop app":
         return "DesktopLaptopApp";
       case "Website":
         return "Website";
