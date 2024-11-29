@@ -1,81 +1,48 @@
-import 'package:autcloud/screens/fifth_screen.dart';
-import 'package:autcloud/screens/fourth_screen.dart';
-import 'package:autcloud/screens/ninth_screen.dart';
-import 'package:autcloud/screens/sixth_screen.dart';
 import 'package:autcloud/screens/second_screen.dart';
-import 'package:autcloud/screens/eighth_screen.dart';
-import 'package:autcloud/screens/seventh_screen.dart';
-import 'package:autcloud/screens/third_screen.dart';
 import 'package:autcloud/style.dart';
 import 'package:autcloud/widgets/upper_content.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:autcloud/models/autcloud_data.dart';
 import 'package:autcloud/services/iac.dart';
 
 class LastScreen extends StatefulWidget {
-  final ResponseIaC responseIaC;
+  // final ResponseIaC responseIaC;
 
-  LastScreen({Key? key, required this.responseIaC}) : super(key: key); // Update constructor
- 
+  // LastScreen({Key? key, required this.responseIaC}) : super(key: key); // Update constructor
+  LastScreen({Key? key}) : super(key: key);
+
   @override
   State<LastScreen> createState() => _LastScreenState();
 }
 
 class _LastScreenState extends State<LastScreen> {
   bool _isLoading = true;
+  bool _isResourceLoading = false;
+
+  ServiceNameInputController serviceNameInputController =
+      Get.put(ServiceNameInputController());
 
   @override
   void initState() {
     super.initState();
-    // 2초 후에 로딩 애니메이션을 숨기고 콘텐츠를 표시
+    // 2초 후에 로딩 애니메이션을 숨기고 컴퓨팅리소스 표시
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
         // TODO represent computing resource spec
-        print(widget.responseIaC);
-      });
-    });
-    Future.delayed(Duration(seconds: 2), () {
-      setState(() {
+        // print(widget.responseIaC);
         _isLoading = false;
       });
     });
+    // 컴퓨팅리소스 표시 1초 후 다운로드 버튼 활성화
+    Future.delayed(Duration(seconds: 3), () {
+      setState(() {
+        _isResourceLoading = true;
+      });
+    });
   }
-
-  // // Service name
-  // final ServiceNameInputController serviceNameInputController =
-  //     Get.put(ServiceNameInputController());
-
-  // // Service type
-  // final ServiceTypeDropdownController serviceTypeDropdownController =
-  //     Get.put(ServiceTypeDropdownController());
-
-  // // Package
-  // final PackagingTypeDropdownController packagingTypeDropdownController =
-  //     Get.put(PackagingTypeDropdownController());
-
-  // // Computer Service Model
-  // final ComputingServiceModelDropdownController
-  //     computingServiceModelDropdownController =
-  //     Get.put(ComputingServiceModelDropdownController());
-
-  // // Profit model
-  // final ProfitModelTypeDropdownController profitModelTypeDropdownController =
-  //     Get.put(ProfitModelTypeDropdownController());
-
-  // // Target stability
-  // final TargetStabilityTypeDropdownController
-  //     targetStabilityTypeDropdownController =
-  //     Get.put(TargetStabilityTypeDropdownController());
-
-  // // Anticipated traffic
-  // final ScalableTypeDropdownController scalableTypeDropdownController =
-  //     Get.put(ScalableTypeDropdownController());
-
-  // // Data processing
-  // final DataTypeDropdownController dataTypeDropdownController =
-  //     Get.put(DataTypeDropdownController());
 
   @override
   Widget build(BuildContext context) {
@@ -95,19 +62,18 @@ class _LastScreenState extends State<LastScreen> {
                   width: double.infinity,
                   child: Column(
                     children: [
-                      SizedBox(height: 100),
+                      const SizedBox(height: 200),
                       // 다운로드 버튼
                       Container(
-                        margin: const EdgeInsets.all(30),
-                        child: DownloadButton(_isLoading, widget.responseIaC),
-                      ),
+                          margin: const EdgeInsets.all(30),
+                          // child: DownloadButton(_isLoading, widget.responseIaC),
+                          child: downloadButton(_isResourceLoading)),
                     ],
                   ),
                 ),
               ),
             ],
           ),
-
           // 로딩 애니메이션을 Stack에 추가
           if (_isLoading)
             Positioned.fill(
@@ -118,39 +84,31 @@ class _LastScreenState extends State<LastScreen> {
                 ),
               ),
             ),
+          if (!_isLoading)
+            Positioned.fill(
+              child: Center(
+                child: ComputingResourceBox(),
+              ),
+            )
         ],
       ),
     );
-    // return Center(
-    //   child: Column(
-    //     children: [
-    //       Text(serviceNameInputController.serviceNameInput.value),
-    //       Text(serviceTypeDropdownController.selectedServiceType.value),
-    //       Text(packagingTypeDropdownController.selectedPackageType.value),
-    //       Text(computingServiceModelDropdownController.selectedComputerServiceModel.value),
-    //       Text(profitModelTypeDropdownController.selectedProfitModelType.value),
-    //       Text(targetStabilityTypeDropdownController.selectedTargetStabilityType.value),
-    //       Text(scalableTypeDropdownController.selectedScalableType.value),
-    //       Text(dataTypeDropdownController.selectedDataType.value)
-    //     ],
-    //   ),
-    // );
   }
 }
 
-
-
 // 다운로드 버튼
-Widget DownloadButton(_isLoading, ResponseIaC responseIaC) {
+// Widget DownloadButton(_isResourceLoading, ResponseIaC responseIaC) {
+Widget downloadButton(_isResourceLoading) {
   return GestureDetector(
     onTap: () {
-      _isLoading ? null : writeToFile(responseIaC);
+      // _isLoading ? null : writeToFile(responseIaC);
+      _isResourceLoading ? print("다운로드") : null;
     },
     child: Container(
       height: 70,
       width: 160,
       decoration: BoxDecoration(
-        color: _isLoading ? Color(0xffaaaaaa) : MainColors.yellow,
+        color: _isResourceLoading ?  MainColors.yellow : Color(0xffaaaaaa),
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: TextColors.title,
@@ -163,6 +121,88 @@ Widget DownloadButton(_isLoading, ResponseIaC responseIaC) {
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
+    ),
+  );
+}
+
+// Computing Resource 박스
+Widget ComputingResourceBox() {
+  ServiceNameInputController serviceNameInputController =
+      Get.put(ServiceNameInputController());
+  return Container(
+    padding: const EdgeInsets.all(10),
+    width: 400,
+    height: 420,
+    decoration: BoxDecoration(
+      color: Colors.white, // 메인 컬러: 화이트
+      borderRadius: BorderRadius.circular(20), // 둥근 모서리
+      boxShadow: const [
+        BoxShadow(
+          color: Color(0xFFF2F2F2), // 그림자 색상: 연한 회색
+          offset: Offset(0, 5), // 그림자가 아래쪽으로만 이동
+          blurRadius: 8, // 흐림 정도
+          spreadRadius: 1, // 그림자의 퍼짐 정도
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          serviceNameInputController.getServiceName(),
+          style: TextStyle(color: TextColors.subtitle),
+        ),
+        const Text(
+          "Calculated computing resource spec",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        // 구분선
+        const Divider(
+          color: Colors.grey, // 선 색상
+          thickness: 1.0, // 선 두께
+          height: 20.0, // 위, 아래 여백 포함 높이
+        ),
+        ListTile(
+          title: Text('3 vCPU'), 
+          subtitle: Text('V-CPU cores'), 
+          leading: Icon(Icons.star_border_rounded), 
+          onTap: () {
+            // print('ListTile tapped!');
+          }, 
+        ),
+        ListTile(
+          title: Text('4 GB'), 
+          subtitle: Text('Memory'),
+          leading: Icon(Icons.star_border_rounded), 
+          onTap: () {
+            // print('ListTile tapped!');
+          }, 
+        ),
+        ListTile(
+          title: Text('160 GB SSD'), 
+          subtitle: Text('Disk'), 
+          leading: Icon(Icons.star_border_rounded), 
+          onTap: () {
+            // print('ListTile tapped!');
+          }, 
+        ),
+        ListTile(
+          title: Text('2 TB Transfer'), 
+          subtitle: Text('BandWidth'), 
+          leading: Icon(Icons.star_border_rounded), 
+          onTap: () {
+            // print('ListTile tapped!');
+          }, 
+        ),
+        ListTile(
+          title: Text('2'), 
+          subtitle: Text('No. of instances'), 
+          leading: Icon(Icons.star_border_rounded), 
+          onTap: () {
+            // print('ListTile tapped!');
+          }, 
+        ),
+      ],
     ),
   );
 }
