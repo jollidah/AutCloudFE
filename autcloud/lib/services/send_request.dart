@@ -65,7 +65,10 @@ Future<ResponseIaC> sendRequest() async {
     } else {
       print('요청 실패: ${response.statusCode}');
     }
-    return ResponseIaC.fromJson(json.decode(response.body)); // Ensure response is defined
+
+    Map<String, dynamic> jsonMap = json.decode(response.body);
+    ResponseIaC responseIaC = ResponseIaC.fromJson(jsonMap); // Ensure response is defined
+    return responseIaC;
   } catch (e) {
     print('오류 발생: $e');
     rethrow; // Optionally rethrow the error

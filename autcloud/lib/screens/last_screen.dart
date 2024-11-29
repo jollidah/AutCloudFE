@@ -162,7 +162,6 @@ Widget ComputingResourceBox(ResponseIaC responseIaC) {
           subtitle: Text('V-CPU cores'), 
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
-            // print('ListTile tapped!');
           }, 
         ),
         ListTile(
@@ -170,15 +169,13 @@ Widget ComputingResourceBox(ResponseIaC responseIaC) {
           subtitle: Text('Memory'),
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
-            // print('ListTile tapped!');
           }, 
         ),
         ListTile(
-          title: Text(responseIaC.computingResourceSpec.disk.toString()), 
-          subtitle: Text('Disk'), 
+          title: Text(responseIaC.computingResourceSpec.storage.toString()), 
+          subtitle: Text('Storage'), 
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
-            // print('ListTile tapped!');
           }, 
         ),
         ListTile(
@@ -186,7 +183,6 @@ Widget ComputingResourceBox(ResponseIaC responseIaC) {
           subtitle: Text('BandWidth'), 
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
-            // print('ListTile tapped!');
           }, 
         ),
         ListTile(
@@ -194,7 +190,6 @@ Widget ComputingResourceBox(ResponseIaC responseIaC) {
           subtitle: Text('No. of instances'), 
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
-            // print('ListTile tapped!');
           }, 
         ),
       ],

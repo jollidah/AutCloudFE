@@ -47,37 +47,55 @@ class ResponseIaC{
     required this.computingResourceSpec,
   });
 
-  factory ResponseIaC.fromJson(Map<String, dynamic> json){
+  factory ResponseIaC.fromJson(Map<String, dynamic> json) {
     return ResponseIaC(
       serviceName: json['service_name'],
       iacCode: json['iac_code'],
       computingResourceSpec: ComputingResourceSpec.fromJson(json['computing_resource_spec']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'service_name': serviceName,
+      'iac_code': iacCode,
+      'computing_resource_spec': computingResourceSpec.toJson(),
+    };
+  }
 }
 
 class ComputingResourceSpec{
   final String vCpuCores;
   final String memory;
-  final String disk;
+  final String storage;
   final String bandwidth;
   final String numOfInstance;
 
   ComputingResourceSpec({
     required this.vCpuCores,
     required this.memory,
-    required this.disk,
+    required this.storage,
     required this.bandwidth,
     required this.numOfInstance,
   });
 
-  factory ComputingResourceSpec.fromJson(Map<String, dynamic> json){
+  factory ComputingResourceSpec.fromJson(Map<String, dynamic> json) {
     return ComputingResourceSpec(
-      vCpuCores: json['vcpu_cores'],
+      vCpuCores: json['v_cpu_cores'],
       memory: json['memory'],
-      disk: json['disk'],
+      storage: json['storage'],
       bandwidth: json['bandwidth'],
       numOfInstance: json['num_of_instance'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'v_cpu_cores': vCpuCores,
+      'memory': memory,
+      'storage': storage,
+      'bandwidth': bandwidth,
+      'num_of_instance': numOfInstance,
+    };
   }
 }
