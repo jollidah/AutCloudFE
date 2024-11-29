@@ -39,6 +39,16 @@ class DataTypeDropdownController extends GetxController {
   var selectedDataType = ''.obs;
 
   getDataType() {
+    switch (selectedDataType.value) {
+      case "simple (Minimal data processing)":
+        return "Simple";
+      case "standard (Text or small file processing)":
+        return "Standard";
+      case "large (Image or document handling)":
+        return "Large";
+      case "extreme (Video, streaming, or\nlarge-scale batch processing)":
+        return "Extreme";
+    }
     return selectedDataType.value;
   }
 }

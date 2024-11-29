@@ -24,7 +24,7 @@ class CustomDropdown extends StatelessWidget {
       menuMaxHeight: 300,
       value: selectedValue.value.isEmpty ? null : selectedValue.value,
       onChanged: (newValue) {
-        selectedValue.value = newValue!.split(" ")[0]; // 괄호 뒤 제거
+        selectedValue.value = newValue!;
       },
       items: items
           .map((item) => DropdownMenuItem<String>(

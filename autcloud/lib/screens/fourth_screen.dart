@@ -40,11 +40,10 @@ class PackagingTypeDropdownController extends GetxController {
   var selectedPackageType = ''.obs;
 
   getPackagingType() {
-    print(selectedPackageType.value);
     switch (selectedPackageType.value) {
       case "Game":
         return "Game";
-      case "Mobile":
+      case "Mobile app":
         return "MobileApp";
       case "Desktop/Laptop":
         return "DesktopLaptopApp";

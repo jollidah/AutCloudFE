@@ -53,8 +53,7 @@ class ServiceTypeDropdownController extends GetxController {
   var selectedServiceType = ''.obs;
 
   getServiceType() {
-    return selectedServiceType.value;
-    switch (value) {
+    switch (selectedServiceType.value) {
       case "Game":
         return "Game";
       case "Online education":
