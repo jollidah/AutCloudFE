@@ -4,7 +4,7 @@ import 'package:autcloud/models/autcloud_data.dart';
 
 void writeToFile(ResponseIaC responseIaC) {
   // 문자열 선언
-  String file_path = "iac_codes/${responseIaC.serviceName}.tf";
+  String file_path = "${responseIaC.serviceName}_IaC.tf";
   String iac_codes = responseIaC.iacCode;
   
   // 문자열을 바이트 배열로 변환

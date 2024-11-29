@@ -18,8 +18,8 @@ class LastScreen extends StatefulWidget {
 }
 
 class _LastScreenState extends State<LastScreen> {
-  bool _isLoading = true;
-  bool _isResourceLoading = false;
+  bool _isResourceLoading = true;
+  bool _isIaCLoading = true;
 
   ServiceNameInputController serviceNameInputController =
       Get.put(ServiceNameInputController());
@@ -30,13 +30,13 @@ class _LastScreenState extends State<LastScreen> {
     // 2초 후에 로딩 애니메이션을 숨기고 컴퓨팅리소스 표시
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
-        _isLoading = false;
+        _isResourceLoading = false;
       });
     });
     // 컴퓨팅리소스 표시 1초 후 다운로드 버튼 활성화
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 4), () {
       setState(() {
-        _isResourceLoading = true;
+        _isIaCLoading = false;
       });
     });
   }
@@ -63,7 +63,7 @@ class _LastScreenState extends State<LastScreen> {
                       // 다운로드 버튼
                       Container(
                           margin: const EdgeInsets.all(30),
-                          child: DownloadButton(_isLoading, widget.responseIaC),
+                          child: DownloadButton(_isIaCLoading, widget.responseIaC),
                       )
                     ],
                   ),
@@ -72,7 +72,7 @@ class _LastScreenState extends State<LastScreen> {
             ],
           ),
           // 로딩 애니메이션을 Stack에 추가
-          if (_isLoading)
+          if (_isResourceLoading)
             Positioned.fill(
               child: Center(
                 child: LoadingAnimationWidget.inkDrop(
@@ -81,7 +81,7 @@ class _LastScreenState extends State<LastScreen> {
                 ),
               ),
             ),
-          if (!_isLoading)
+          if (!_isResourceLoading)
             Positioned.fill(
               child: Center(
                 child: ComputingResourceBox(widget.responseIaC),
@@ -94,16 +94,16 @@ class _LastScreenState extends State<LastScreen> {
 }
 
 // 다운로드 버튼
-Widget DownloadButton(_isResourceLoading, ResponseIaC responseIaC) {
+Widget DownloadButton(_isIaCLoading, ResponseIaC responseIaC) {
   return GestureDetector(
     onTap: () {
-      _isResourceLoading ? null : writeToFile(responseIaC);
+      _isIaCLoading ? null : writeToFile(responseIaC);
     },
     child: Container(
       height: 70,
       width: 160,
       decoration: BoxDecoration(
-        color: _isResourceLoading ?  MainColors.yellow : Color(0xffaaaaaa),
+        color: _isIaCLoading ?  Color(0xffaaaaaa) : MainColors.yellow,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: TextColors.title,
