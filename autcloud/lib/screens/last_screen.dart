@@ -9,10 +9,9 @@ import 'package:autcloud/models/autcloud_data.dart';
 import 'package:autcloud/services/iac.dart';
 
 class LastScreen extends StatefulWidget {
-  // final ResponseIaC responseIaC;
+  final ResponseIaC responseIaC;
 
-  // LastScreen({Key? key, required this.responseIaC}) : super(key: key); // Update constructor
-  LastScreen({Key? key}) : super(key: key);
+  LastScreen({Key? key, required this.responseIaC}) : super(key: key); // Update constructor
 
   @override
   State<LastScreen> createState() => _LastScreenState();
@@ -31,8 +30,6 @@ class _LastScreenState extends State<LastScreen> {
     // 2초 후에 로딩 애니메이션을 숨기고 컴퓨팅리소스 표시
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
-        // TODO represent computing resource spec
-        // print(widget.responseIaC);
         _isLoading = false;
       });
     });
@@ -66,8 +63,8 @@ class _LastScreenState extends State<LastScreen> {
                       // 다운로드 버튼
                       Container(
                           margin: const EdgeInsets.all(30),
-                          // child: DownloadButton(_isLoading, widget.responseIaC),
-                          child: downloadButton(_isResourceLoading)),
+                          child: DownloadButton(_isLoading, widget.responseIaC),
+                      )
                     ],
                   ),
                 ),
@@ -87,7 +84,7 @@ class _LastScreenState extends State<LastScreen> {
           if (!_isLoading)
             Positioned.fill(
               child: Center(
-                child: ComputingResourceBox(),
+                child: ComputingResourceBox(widget.responseIaC),
               ),
             )
         ],
@@ -97,12 +94,10 @@ class _LastScreenState extends State<LastScreen> {
 }
 
 // 다운로드 버튼
-// Widget DownloadButton(_isResourceLoading, ResponseIaC responseIaC) {
-Widget downloadButton(_isResourceLoading) {
+Widget DownloadButton(_isResourceLoading, ResponseIaC responseIaC) {
   return GestureDetector(
     onTap: () {
-      // _isLoading ? null : writeToFile(responseIaC);
-      _isResourceLoading ? print("다운로드") : null;
+      _isResourceLoading ? null : writeToFile(responseIaC);
     },
     child: Container(
       height: 70,
@@ -126,7 +121,7 @@ Widget downloadButton(_isResourceLoading) {
 }
 
 // Computing Resource 박스
-Widget ComputingResourceBox() {
+Widget ComputingResourceBox(ResponseIaC responseIaC) {
   ServiceNameInputController serviceNameInputController =
       Get.put(ServiceNameInputController());
   return Container(
@@ -163,7 +158,7 @@ Widget ComputingResourceBox() {
           height: 20.0, // 위, 아래 여백 포함 높이
         ),
         ListTile(
-          title: Text('3 vCPU'), 
+          title: Text(responseIaC.computingResourceSpec.vCpuCores.toString()), 
           subtitle: Text('V-CPU cores'), 
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
@@ -171,7 +166,7 @@ Widget ComputingResourceBox() {
           }, 
         ),
         ListTile(
-          title: Text('4 GB'), 
+          title: Text(responseIaC.computingResourceSpec.memory.toString()), 
           subtitle: Text('Memory'),
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
@@ -179,7 +174,7 @@ Widget ComputingResourceBox() {
           }, 
         ),
         ListTile(
-          title: Text('160 GB SSD'), 
+          title: Text(responseIaC.computingResourceSpec.disk.toString()), 
           subtitle: Text('Disk'), 
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
@@ -187,7 +182,7 @@ Widget ComputingResourceBox() {
           }, 
         ),
         ListTile(
-          title: Text('2 TB Transfer'), 
+          title: Text(responseIaC.computingResourceSpec.bandwidth.toString()), 
           subtitle: Text('BandWidth'), 
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
@@ -195,7 +190,7 @@ Widget ComputingResourceBox() {
           }, 
         ),
         ListTile(
-          title: Text('2'), 
+          title: Text(responseIaC.computingResourceSpec.numOfInstance.toString()), 
           subtitle: Text('No. of instances'), 
           leading: Icon(Icons.star_border_rounded), 
           onTap: () {
